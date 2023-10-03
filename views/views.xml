@@ -1,0 +1,127 @@
+<odoo>
+  <data>
+ <!-- Form views -->
+      <record id="gasform_module_form" model="ir.ui.view">
+            <field name="name">gasform.modul.form</field>
+            <field name="model">gasform.modul</field>
+            <field name="arch" type="xml">
+                <form string="Master">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name="suppiler_name"/>
+                        <field name="gasform_name"/>
+                    </group>
+                    <group>
+                        <field name="location_gasform" widget="many2many_tags"/>
+                        <field name="price_pr"/>
+                        <field name="active"/>
+                    </group>
+                    </group> 
+                </sheet>
+                <!--Chatter  -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups = "base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>              
+                </form>  
+            </field>
+        </record>
+
+<!-- Tree views -->
+    <record id="gasform_form_tree" model="ir.ui.view">
+        <field name="name">gasform.modul.tree</field>
+        <field name="model">gasform.modul</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="suppiler_name"/>
+                <field name="gasform_name"/>
+                <field name="location_gasform" domain="[('suppiler_name','=',suppiler_name)]"/>
+                <field name="price_pr"/>             
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+
+    <record id="gasform_gas_form_search" model="ir.ui.view">
+        <field name="name">gasform.modul.search</field>
+        <field name="model">gasform.modul</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="suppiler_name"  string='Gas'/>
+                <field name="gasform_name"/>
+                <field name="location_gasform"/>
+                <filter name="filter_gas" string="Gas" domain="[]"/>
+
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', 'False')]"/>
+
+                <group expand="0" string="Group By">
+                        <filter string="Supplier" name="group_by_sp" context="{'group_by': 'suppiler_name'}"/>
+
+                        <filter string="Supplier Location" name="group_by_sploc" context="{'group_by': 'location_gasform'}"/>
+                </group>              
+            </search>
+        </field>
+    </record>
+
+<!-- Action Views -->
+     <record id="gasform_order_action" model="ir.actions.act_window">
+        <field name="name">Gas Form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gasform.modul</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_gasform_sale__menu"
+        name="Master Form"
+        parent="sale.menu_sale_config"
+        action="gasform_order_action"
+        sequence="17"/>
+
+
+
+<!-- Form views city location-->
+    <record id="supply_city_location_form" model="ir.ui.view">
+            <field name="name">city.location.form</field>
+            <field name="model">city.location</field>
+            <field name="arch" type="xml">
+                <form string="Master">
+                    <sheet>
+                        <group>
+                            <field name="suppiler_name"/>
+                            <field name="gasform_name"/>
+                            <field name="name"/>
+                        </group>                   
+                    </sheet>              
+                </form>  
+            </field>
+    </record>
+    <!-- Tree views city Location-->
+    <record id="supply_city_location_tree" model="ir.ui.view">
+        <field name="name">city.location.tree</field>
+        <field name="model">city.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="suppiler_name"/>
+                <field name="gasform_name"/>         
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action Views -->
+     <record id="supply_city_location_action" model="ir.actions.act_window">
+            <field name="name">City Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">city.location</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+
+   <menuitem id="supply_city_location_menu"
+        name="City Location"
+        parent="sale.menu_sale_config"
+        action="supply_city_location_action"
+        sequence="18"/>
+  </data>
+</odoo>
